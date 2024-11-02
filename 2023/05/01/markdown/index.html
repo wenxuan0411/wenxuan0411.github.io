@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="This is a inruoduction of Markdown.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="markdown语法简介">
+<meta property="og:url" content="http://example.com/2023/05/01/markdown/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="This is a inruoduction of Markdown.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.markdownguide.org/assets/images/markdown-guide-og.jpg">
+<meta property="article:published_time" content="2023-05-01T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-19T13:13:38.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Fluid">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.markdownguide.org/assets/images/markdown-guide-og.jpg">
+  
+  
+  
+  <title>markdown语法简介 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="markdown语法简介"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-01 10:00" pubdate>
+          2023年5月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">markdown语法简介</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Heading-1"><a href="#Heading-1" class="headerlink" title="Heading 1"></a>Heading 1</h1><h2 id="Heading-2"><a href="#Heading-2" class="headerlink" title="Heading 2"></a>Heading 2</h2><h3 id="Heading-3"><a href="#Heading-3" class="headerlink" title="Heading 3"></a>Heading 3</h3><h4 id="Heading-4"><a href="#Heading-4" class="headerlink" title="Heading 4"></a>Heading 4</h4><h5 id="Heading-5"><a href="#Heading-5" class="headerlink" title="Heading 5"></a>Heading 5</h5><h6 id="Heading-6"><a href="#Heading-6" class="headerlink" title="Heading 6"></a>Heading 6</h6><h1 id="Heading-1-link-Heading-link"><a href="#Heading-1-link-Heading-link" class="headerlink" title="Heading 1 link Heading link"></a>Heading 1 link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a></h1><h2 id="Heading-2-link-Heading-link"><a href="#Heading-2-link-Heading-link" class="headerlink" title="Heading 2 link Heading link"></a>Heading 2 link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a></h2><h3 id="Heading-3-link-Heading-link"><a href="#Heading-3-link-Heading-link" class="headerlink" title="Heading 3 link Heading link"></a>Heading 3 link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a></h3><h4 id="Heading-4-link-Heading-link-Heading-link-Heading-link"><a href="#Heading-4-link-Heading-link-Heading-link-Heading-link" class="headerlink" title="Heading 4 link Heading link Heading link Heading link"></a>Heading 4 link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a> Heading link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a></h4><h5 id="Heading-5-link-Heading-link"><a href="#Heading-5-link-Heading-link" class="headerlink" title="Heading 5 link Heading link"></a>Heading 5 link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a></h5><h6 id="Heading-6-link-Heading-link"><a href="#Heading-6-link-Heading-link" class="headerlink" title="Heading 6 link Heading link"></a>Heading 6 link <a target="_blank" rel="noopener" href="https://github.com/pandao/editor.md" title="Heading link">Heading link</a></h6><h4 id="标题（用底线的形式）Heading-underline"><a href="#标题（用底线的形式）Heading-underline" class="headerlink" title="标题（用底线的形式）Heading (underline)"></a>标题（用底线的形式）Heading (underline)</h4><h1 id="This-is-an-H1"><a href="#This-is-an-H1" class="headerlink" title="This is an H1"></a>This is an H1</h1><h2 id="This-is-an-H2"><a href="#This-is-an-H2" class="headerlink" title="This is an H2"></a>This is an H2</h2><h3 id="字符效果和横线等"><a href="#字符效果和横线等" class="headerlink" title="字符效果和横线等"></a>字符效果和横线等</h3><hr>
+<p><del>删除线</del> <s>删除线（开启识别HTML标签时）</s><br><em>斜体字</em>      <em>斜体字</em><br><strong>粗体</strong>  <strong>粗体</strong><br><em><strong>粗斜体</strong></em> <em><strong>粗斜体</strong></em></p>
+<p>上标：X<sub>2</sub>，下标：O<sup>2</sup></p>
+<p><strong>缩写(同HTML的abbr标签)</strong></p>
+<blockquote>
+<p>即更长的单词或短语的缩写形式，前提是开启识别HTML标签时，已默认开启</p>
+</blockquote>
+<p>The <abbr title="Hyper Text Markup Language">HTML</abbr> specification is maintained by the <abbr title="World Wide Web Consortium">W3C</abbr>.</p>
+<h3 id="引用-Blockquotes"><a href="#引用-Blockquotes" class="headerlink" title="引用 Blockquotes"></a>引用 Blockquotes</h3><blockquote>
+<p>引用文本 Blockquotes</p>
+</blockquote>
+<p>引用的行内混合 Blockquotes</p>
+<blockquote>
+<p>引用：如果想要插入空白换行<code>即&lt;br /&gt;标签</code>，在插入处先键入两个以上的空格然后回车即可，<a target="_blank" rel="noopener" href="http://localhost/">普通链接</a>。</p>
+</blockquote>
+<h3 id="锚点与链接-Links"><a href="#锚点与链接-Links" class="headerlink" title="锚点与链接 Links"></a>锚点与链接 Links</h3><p><a target="_blank" rel="noopener" href="http://localhost/">普通链接</a></p>
+<p><a target="_blank" rel="noopener" href="http://localhost/" title="普通链接带标题">普通链接带标题</a></p>
+<p>直接链接：<a target="_blank" rel="noopener" href="https://github.com/">https://github.com</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.this-anchor-link.com/">锚点链接</a> </p>
+<p><a href="mailto:test.test@gmail.com">mailto:test.test@gmail.com</a></p>
+<p>GFM a-tail link @pandao  邮箱地址自动链接 <a href="mailto:&#x74;&#x65;&#x73;&#116;&#x2e;&#x74;&#x65;&#115;&#116;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#x6d;">&#x74;&#x65;&#x73;&#116;&#x2e;&#x74;&#x65;&#115;&#116;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#x6d;</a>  <a href="mailto:&#x77;&#x77;&#x77;&#64;&#118;&#105;&#x70;&#46;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;">&#x77;&#x77;&#x77;&#64;&#118;&#105;&#x70;&#46;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;</a></p>
+<blockquote>
+<p>@pandao</p>
+</blockquote>
+<h3 id="多语言代码高亮-Codes"><a href="#多语言代码高亮-Codes" class="headerlink" title="多语言代码高亮 Codes"></a>多语言代码高亮 Codes</h3><h4 id="行内代码-Inline-code"><a href="#行内代码-Inline-code" class="headerlink" title="行内代码 Inline code"></a>行内代码 Inline code</h4><p>执行命令：<code>npm install marked</code></p>
+<h4 id="缩进风格"><a href="#缩进风格" class="headerlink" title="缩进风格"></a>缩进风格</h4><p>即缩进四个空格，也做为实现类似 <code>&lt;pre&gt;</code> 预格式化文本 ( Preformatted Text ) 的功能。</p>
+<pre><code class="hljs">&lt;?php
+    echo &quot;Hello world!&quot;;
+?&gt;
+</code></pre>
+<p>预格式化文本：</p>
+<pre><code class="hljs">| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+</code></pre>
+<h4 id="JS代码"><a href="#JS代码" class="headerlink" title="JS代码"></a>JS代码</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">test</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hello world!&quot;</span>);<br>&#125;<br> <br>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> box = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> box.<span class="hljs-property">fn</span>.<span class="hljs-title function_">init</span>();<br>    &#125;;<br><br>    box.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = box.<span class="hljs-property">fn</span> = &#123;<br>        init : <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;box.init()&#x27;</span>);<br><br>			<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>        &#125;,<br><br>		add : <span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>) &#123;<br>			<span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;add&quot;</span>, str);<br><br>			<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>		&#125;,<br><br>		remove : <span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>) &#123;<br>			<span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;remove&quot;</span>, str);<br><br>			<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>		&#125;<br>    &#125;;<br>    <br>    box.<span class="hljs-property">fn</span>.<span class="hljs-property">init</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = box.<span class="hljs-property">fn</span>;<br>    <br>    <span class="hljs-variable language_">window</span>.<span class="hljs-property">box</span> =box;<br>&#125;)();<br><br><span class="hljs-keyword">var</span> testBox = <span class="hljs-title function_">box</span>();<br>testBox.<span class="hljs-title function_">add</span>(<span class="hljs-string">&quot;jQuery&quot;</span>).<span class="hljs-title function_">remove</span>(<span class="hljs-string">&quot;jQuery&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id="HTML-代码-HTML-codes"><a href="#HTML-代码-HTML-codes" class="headerlink" title="HTML 代码 HTML codes"></a>HTML 代码 HTML codes</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mate</span> <span class="hljs-attr">charest</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;keywords&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;Editor.md, Markdown, Editor&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hello world!<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">            <span class="hljs-selector-tag">body</span>&#123;<span class="hljs-attribute">font-size</span>:<span class="hljs-number">14px</span>;<span class="hljs-attribute">color</span>:<span class="hljs-number">#444</span>;<span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Microsoft Yahei&quot;</span>, Tahoma, <span class="hljs-string">&quot;Hiragino Sans GB&quot;</span>, Arial;<span class="hljs-attribute">background</span>:<span class="hljs-number">#fff</span>;&#125;</span><br><span class="language-css">            <span class="hljs-selector-tag">ul</span>&#123;<span class="hljs-attribute">list-style</span>: none;&#125;</span><br><span class="language-css">            <span class="hljs-selector-tag">img</span>&#123;<span class="hljs-attribute">border</span>:none;<span class="hljs-attribute">vertical-align</span>: middle;&#125;</span><br><span class="language-css">        </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xxl&quot;</span>&gt;</span>Hello world!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-green&quot;</span>&gt;</span>Plain text<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="图片-Images"><a href="#图片-Images" class="headerlink" title="图片 Images"></a>图片 Images</h3><p>Image:</p>
+<p><img src="https://pandao.github.io/editor.md/examples/images/4.jpg" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>Follow your heart.</p>
+</blockquote>
+<p><img src="https://pandao.github.io/editor.md/examples/images/8.jpg" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>图为：厦门白城沙滩</p>
+</blockquote>
+<p>图片加链接 (Image + Link)：</p>
+<p><a target="_blank" rel="noopener" href="https://pandao.github.io/editor.md/images/7.jpg" title="李健首张专辑《似水流年》封面"><img src="https://pandao.github.io/editor.md/examples/images/7.jpg" srcset="/img/loading.gif" lazyload></a></p>
+<blockquote>
+<p>图为：李健首张专辑《似水流年》封面</p>
+</blockquote>
+<hr>
+<h3 id="列表-Lists"><a href="#列表-Lists" class="headerlink" title="列表 Lists"></a>列表 Lists</h3><h4 id="无序列表（减号）Unordered-Lists"><a href="#无序列表（减号）Unordered-Lists" class="headerlink" title="无序列表（减号）Unordered Lists (-)"></a>无序列表（减号）Unordered Lists (-)</h4><ul>
+<li>列表一</li>
+<li>列表二</li>
+<li>列表三</li>
+</ul>
+<h4 id="无序列表（星号）Unordered-Lists"><a href="#无序列表（星号）Unordered-Lists" class="headerlink" title="无序列表（星号）Unordered Lists (*)"></a>无序列表（星号）Unordered Lists (*)</h4><ul>
+<li>列表一</li>
+<li>列表二</li>
+<li>列表三</li>
+</ul>
+<h4 id="无序列表（加号和嵌套）Unordered-Lists"><a href="#无序列表（加号和嵌套）Unordered-Lists" class="headerlink" title="无序列表（加号和嵌套）Unordered Lists (+)"></a>无序列表（加号和嵌套）Unordered Lists (+)</h4><ul>
+<li>列表一</li>
+<li>列表二<ul>
+<li>列表二-1</li>
+<li>列表二-2</li>
+<li>列表二-3</li>
+</ul>
+</li>
+<li>列表三<ul>
+<li>列表一</li>
+<li>列表二</li>
+<li>列表三</li>
+</ul>
+</li>
+</ul>
+<h4 id="有序列表-Ordered-Lists"><a href="#有序列表-Ordered-Lists" class="headerlink" title="有序列表 Ordered Lists (-)"></a>有序列表 Ordered Lists (-)</h4><ol>
+<li>第一行</li>
+<li>第二行</li>
+<li>第三行</li>
+</ol>
+<h4 id="GFM-task-list"><a href="#GFM-task-list" class="headerlink" title="GFM task list"></a>GFM task list</h4><ul>
+<li><input checked="" disabled="" type="checkbox"> GFM task list 1</li>
+<li><input checked="" disabled="" type="checkbox"> GFM task list 2</li>
+<li><input disabled="" type="checkbox"> GFM task list 3<ul>
+<li><input disabled="" type="checkbox"> GFM task list 3-1</li>
+<li><input disabled="" type="checkbox"> GFM task list 3-2</li>
+<li><input disabled="" type="checkbox"> GFM task list 3-3</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> GFM task list 4<ul>
+<li><input disabled="" type="checkbox"> GFM task list 4-1</li>
+<li><input disabled="" type="checkbox"> GFM task list 4-2</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="绘制表格-Tables"><a href="#绘制表格-Tables" class="headerlink" title="绘制表格 Tables"></a>绘制表格 Tables</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">价格</th>
+<th align="center">数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计算机</td>
+<td align="right">$1600</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td>手机</td>
+<td align="right">$12</td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td>管线</td>
+<td align="right">$1</td>
+<td align="center">234</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Function name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>help()</code></td>
+<td>Display the help window.</td>
+</tr>
+<tr>
+<td><code>destroy()</code></td>
+<td><strong>Destroy your computer!</strong></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">Left-Aligned</th>
+<th align="center">Center Aligned</th>
+<th align="right">Right Aligned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">col 3 is</td>
+<td align="center">some wordy text</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td align="left">col 2 is</td>
+<td align="center">centered</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td align="left">zebra stripes</td>
+<td align="center">are neat</td>
+<td align="right">$1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Computer</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td align="right">$1</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="特殊符号-HTML-Entities-Codes"><a href="#特殊符号-HTML-Entities-Codes" class="headerlink" title="特殊符号 HTML Entities Codes"></a>特殊符号 HTML Entities Codes</h4><p>&copy; &amp;  &uml; &trade; &iexcl; &pound;<br>&amp; &lt; &gt; &yen; &euro; &reg; &plusmn; &para; &sect; &brvbar; &macr; &laquo; &middot; </p>
+<p>X&sup2; Y&sup3; &frac34; &frac14;  &times;  &divide;   &raquo;</p>
+<p>18&ordm;C  &quot;  &apos;</p>
+<p>[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;]</p>
+<h3 id="Emoji表情-smiley"><a href="#Emoji表情-smiley" class="headerlink" title="Emoji表情 :smiley:"></a>Emoji表情 :smiley:</h3><blockquote>
+<p>Blockquotes :star:</p>
+</blockquote>
+<h4 id="GFM-task-lists-Emoji-fontAwesome-icon-emoji-editormd-logo-emoji-editormd-logo-5x"><a href="#GFM-task-lists-Emoji-fontAwesome-icon-emoji-editormd-logo-emoji-editormd-logo-5x" class="headerlink" title="GFM task lists &amp; Emoji &amp; fontAwesome icon emoji &amp; editormd logo emoji :editormd-logo-5x:"></a>GFM task lists &amp; Emoji &amp; fontAwesome icon emoji &amp; editormd logo emoji :editormd-logo-5x:</h4><ul>
+<li><input checked="" disabled="" type="checkbox"> :smiley: @mentions, :smiley: #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> supported :editormd-logo:;</li>
+<li><input checked="" disabled="" type="checkbox"> list syntax required (any unordered or ordered list supported) :editormd-logo-3x:;</li>
+<li><input checked="" disabled="" type="checkbox"> [ ] :smiley: this is a complete item :smiley:;</li>
+<li><input disabled="" type="checkbox"> []this is an incomplete item <a href="#">test link</a> :fa-star: @pandao; </li>
+<li><input disabled="" type="checkbox"> [ ]this is an incomplete item :fa-star: :fa-gear:;<ul>
+<li><input disabled="" type="checkbox"> :smiley: this is an incomplete item <a href="#">test link</a> :fa-star: :fa-gear:;</li>
+<li><input disabled="" type="checkbox"> :smiley: this is  :fa-star: :fa-gear: an incomplete item <a href="#">test link</a>;</li>
+</ul>
+</li>
+</ul>
+<h4 id="反斜杠-Escape"><a href="#反斜杠-Escape" class="headerlink" title="反斜杠 Escape"></a>反斜杠 Escape</h4><p>*literal asterisks*</p>
+<p>[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;]</p>
+<h3 id="科学公式-TeX-KaTeX"><a href="#科学公式-TeX-KaTeX" class="headerlink" title="科学公式 TeX(KaTeX)"></a>科学公式 TeX(KaTeX)</h3><p>$$E&#x3D;mc^2$$</p>
+<p>行内的公式$$E&#x3D;mc^2$$行内的公式，行内的$$E&#x3D;mc^2$$公式。</p>
+<p>$$x &gt; y$$</p>
+<p>$$(\sqrt{3x-1}+(1+x)^2)$$</p>
+<p>$$\sin(\alpha)^{\theta}&#x3D;\sum_{i&#x3D;0}^{n}(x^i + \cos(f))$$</p>
+<p>多行公式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs math">\displaystyle<br>\left( \sum\_&#123;k=1&#125;^n a\_k b\_k \right)^2<br>\leq<br>\left( \sum\_&#123;k=1&#125;^n a\_k^2 \right)<br>\left( \sum\_&#123;k=1&#125;^n b\_k^2 \right)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs katex">\displaystyle <br>    \frac&#123;1&#125;&#123;<br>        \Bigl(\sqrt&#123;\phi \sqrt&#123;5&#125;&#125;-\phi\Bigr) e^&#123;<br>        \frac25 \pi&#125;&#125; = 1+\frac&#123;e^&#123;-2\pi&#125;&#125; &#123;1+\frac&#123;e^&#123;-4\pi&#125;&#125; &#123;<br>        1+\frac&#123;e^&#123;-6\pi&#125;&#125;<br>        &#123;1+\frac&#123;e^&#123;-8\pi&#125;&#125;<br>         &#123;1+\cdots&#125; &#125;<br>        &#125; <br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs latex">f(x) = <span class="hljs-keyword">\int</span><span class="hljs-built_in">_</span>&#123;-<span class="hljs-keyword">\infty</span>&#125;<span class="hljs-built_in">^</span><span class="hljs-keyword">\infty</span><br>    <span class="hljs-keyword">\hat</span> f(<span class="hljs-keyword">\xi</span>)<span class="hljs-keyword">\,</span>e<span class="hljs-built_in">^</span>&#123;2 <span class="hljs-keyword">\pi</span> i <span class="hljs-keyword">\xi</span> x&#125;<br>    <span class="hljs-keyword">\,</span>d<span class="hljs-keyword">\xi</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="分页符-Page-break"><a href="#分页符-Page-break" class="headerlink" title="分页符 Page break"></a>分页符 Page break</h3><blockquote>
+<p>Print Test: Ctrl + P</p>
+</blockquote>
+<p>[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;]</p>
+<h3 id="绘制流程图-Flowchart"><a href="#绘制流程图-Flowchart" class="headerlink" title="绘制流程图 Flowchart"></a>绘制流程图 Flowchart</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs flow">st=&gt;start: 用户登陆<br>op=&gt;operation: 登陆操作<br>cond=&gt;condition: 登陆成功 Yes or No?<br>e=&gt;end: 进入后台<br><br>st-&gt;op-&gt;cond<br>cond(yes)-&gt;e<br>cond(no)-&gt;op<br></code></pre></td></tr></table></figure>
+
+<p>[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;]</p>
+<h3 id="绘制序列图-Sequence-Diagram"><a href="#绘制序列图-Sequence-Diagram" class="headerlink" title="绘制序列图 Sequence Diagram"></a>绘制序列图 Sequence Diagram</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs seq">Andrew-&gt;China: Says Hello <br>Note right of China: China thinks\nabout it <br>China--&gt;Andrew: How are you? <br>Andrew-&gt;&gt;China: I am good thanks!<br></code></pre></td></tr></table></figure>
+
+<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
+      
+        <a href="/tags/Fluid/" class="print-no-link">#Fluid</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>markdown语法简介</div>
+      <div>http://example.com/2023/05/01/markdown/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/11/02/hello-world/" title="Hello World">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
