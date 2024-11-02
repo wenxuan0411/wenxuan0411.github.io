@@ -189,7 +189,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="海上升明月，天涯共此时"></span>
           
         </div>
 
@@ -389,7 +389,78 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+                // 打字机输出内容
+                var apiText;
+                // 一言、来源作品、发言人
+                xvar hitokoto, from, fromWho;
+                // 从一言接口得到的JSON结果
+                if (result) {
+                        // 需要的结果字段名，取决于_config[.主题名称].yml中的配置
+                        var keys = 'data,hitokoto,from,from_who'.split(',');
+                        if (result instanceof Array) {
+                            // 得到 去掉外层{}的 数据
+                            result = result[0];
+                        }
+                        // 取出实际展示的字段
+                        for (const k of keys) {
+                            var value = result[k];
+                            if (typeof value === 'string') {
+                                if (hitokoto == null) {
+                                    hitokoto = value;
+                                } else if (from == null) {
+                                    from = value
+                                } else if (fromWho == null) {
+                                    fromWho = value;
+                                }
+                            } else if (value instanceof Object) {
+                                result = value;
+                            }
+                        }
+                        // 头像
+                        apiText = "<img src='/img/avatar-gray.png' class='my-avatar' />";
+                        // 样式
+                        apiText += '<p style="font-size: 30px; text-align: center">『&#12288;' + hitokoto + '』</p>' +
+                                '<p style="margin-top: 15px; text-align: right; font-size: 24px; color: #e0e0e0">——';
+                        // 一言的发言人可能未知
+                        if (fromWho != null) {
+                            apiText += fromWho;
+                        }
+                        apiText += '「' + from + '」</p>';
+                    }
+                    apiText ? typing(apiText) : typing(text);
+                },
+                error: function (xhr, status, error) {
+            var apiText;
+            if (result) {
+              var keys = 'data,hitokoto,from,from_who'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
