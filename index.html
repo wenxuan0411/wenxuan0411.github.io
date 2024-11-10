@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -57,6 +57,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/indeximg-hover.css">
 
 
 
@@ -196,7 +200,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -450,7 +454,8 @@
                 }
               }
             }
-            apiText ? typing(apiText) : typing(text);
+            if(result['from_who']===null) result['from_who']='';
+            apiText ? typing(apiText+ '<br /> <h4>'+ '--' +result['from_who']+'「'+result['from']+'」'+'</h4>') : typing(text);
           },
           error: function(xhr, status, error) {
             if (error) {
