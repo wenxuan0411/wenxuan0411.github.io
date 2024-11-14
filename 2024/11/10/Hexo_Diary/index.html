@@ -19,16 +19,16 @@
   <meta name="author" content="Chen">
   <meta name="keywords" content="">
   
-    <meta name="description" content="引以为戒">
+    <meta name="description" content="记录一下你的诞生过程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的Hexo建站日记">
 <meta property="og:url" content="http://example.com/2024/11/10/Hexo_Diary/index.html">
 <meta property="og:site_name" content="文轩">
-<meta property="og:description" content="引以为戒">
+<meta property="og:description" content="记录一下你的诞生过程">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fluid.s3.bitiful.net/hello-fluid/cover.png?w=480&fmt=webp">
 <meta property="article:published_time" content="2024-11-10T08:00:00.000Z">
-<meta property="article:modified_time" content="2024-11-10T07:55:18.782Z">
+<meta property="article:modified_time" content="2024-11-14T06:49:00.203Z">
 <meta property="article:author" content="Chen">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
@@ -75,6 +75,7 @@
 
   
 <link rel="stylesheet" href="/css/indeximg-hover.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css">
 
 
 
@@ -305,9 +306,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="我的Hexo建站日记"><a href="#我的Hexo建站日记" class="headerlink" title="我的Hexo建站日记"></a>我的Hexo建站日记</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>原来耗费心力建的博客被自己玩坏了，狠下心来又新建一个（域名同），中间又经历了许多坎坷，花费几个周末，终于又恢复原来的模样。</p>
-<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><h3 id="一、安装Fluid主题"><a href="#一、安装Fluid主题" class="headerlink" title="一、安装Fluid主题"></a>一、安装Fluid主题</h3><p>不再赘述</p>
-<h3 id="二、一言"><a href="#二、一言" class="headerlink" title="二、一言"></a>二、一言</h3><h4 id="修改主题配置文件-config-fluid-yml"><a href="#修改主题配置文件-config-fluid-yml" class="headerlink" title="修改主题配置文件 _config.fluid.yml"></a>修改主题配置文件<code> _config.fluid.yml</code></h4><p>在 Fluid 主题配置文件修改 <code>index/slogan</code> 配置的 <code>url</code> 和 <code>keys</code></p>
+                <h1 id="我的Hexo建站日记"><a href="#我的Hexo建站日记" class="headerlink" title="我的Hexo建站日记"></a>我的Hexo建站日记</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>原来耗费心力建的博客崩掉了，想着再做一个博客消磨时间，亦可以增加编程乐趣，其中又经历了许多坎坷，花费几个周末，终于又恢复原来的模样。</p>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><h3 id="一、安装Fluid主题"><a href="#一、安装Fluid主题" class="headerlink" title="一、安装Fluid主题"></a>一、安装Fluid主题</h3><h3 id="二、一言"><a href="#二、一言" class="headerlink" title="二、一言"></a>二、一言</h3><h4 id="修改主题配置文件-config-fluid-yml"><a href="#修改主题配置文件-config-fluid-yml" class="headerlink" title="修改主题配置文件 _config.fluid.yml"></a>修改主题配置文件<code> _config.fluid.yml</code></h4><p>在 Fluid 主题配置文件修改 <code>index/slogan</code> 配置的 <code>url</code> 和 <code>keys</code></p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">slogan:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment"># 为空则按 hexo config.subtitle 显示</span><br>  <span class="hljs-comment"># If empty, text based on `subtitle` in hexo config</span><br>  <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;明眸如初，又见苍岚&quot;</span><br><br>  <span class="hljs-comment"># 通过 API 接口作为首页副标题的内容，必须返回的是 JSON 格式，如果请求失败则按 text 字段显示，该功能必须先开启 typing 打字机功能</span><br>  <span class="hljs-comment"># Subtitle of the homepage through the API, must be returned a JSON. If the request fails, it will be displayed in `text` value. This feature must first enable the typing animation</span><br>  <span class="hljs-attr">api:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>    <span class="hljs-comment"># 请求地址</span><br>    <span class="hljs-comment"># Request url</span><br>    <span class="hljs-attr">url:</span> <span class="hljs-string">&quot;https://v1.hitokoto.cn/&quot;</span><br><br>    <span class="hljs-comment"># 请求方法</span><br>    <span class="hljs-comment"># Request method</span><br>    <span class="hljs-comment"># Available: GET | POST | PUT</span><br>    <span class="hljs-attr">method:</span> <span class="hljs-string">&quot;GET&quot;</span><br><br>    <span class="hljs-comment"># 请求头</span><br>    <span class="hljs-comment"># Request headers</span><br>    <span class="hljs-attr">headers:</span> &#123;&#125;<br><br>    <span class="hljs-comment"># 从请求结果获取字符串的取值字段，最终必须是一个字符串，例如返回结果为 &#123;&quot;data&quot;: &#123;&quot;author&quot;: &quot;fluid&quot;, &quot;content&quot;: &quot;An elegant theme&quot;&#125;&#125;, 则取值字段为 [&#x27;data&#x27;, &#x27;content&#x27;]；如果返回是列表则自动选择第一项</span><br>    <span class="hljs-comment"># The value field of the string obtained from the response. For example, the response content is &#123;&quot;data&quot;: &#123;&quot;author&quot;: &quot;fluid&quot;, &quot;content&quot;: &quot;An elegant theme&quot;&#125;&#125;, the expected `keys: [&#x27;data&#x27;,&#x27;content&#x27;]`; if the return is a list, the first item is automatically selected</span><br>    <span class="hljs-attr">keys:</span> [<span class="hljs-string">&#x27;hitokoto&#x27;</span>]<br></code></pre></td></tr></table></figure>
 
 <h4 id="添加作者相关信息"><a href="#添加作者相关信息" class="headerlink" title="添加作者相关信息"></a>添加作者相关信息</h4><p>1.打开<strong>主题</strong>根目录下的<code>layout\_partial\plugins</code>文件夹，修改其中的<code>typed.ejs</code>文件</p>
@@ -344,6 +344,9 @@
 <p>在主题配置中的 <code>custom_css:</code> 添加  <code>- /css/indeximg-hover.css</code>，完整如下：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># 指定自定义 .css 文件路径，用法和 custom_js 相同</span><br><span class="hljs-comment"># The usage is the same as custom_js</span><br><span class="hljs-attr">custom_css:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">/css/indeximg-hover.css</span><br></code></pre></td></tr></table></figure>
 
+
+
+<p>期待更新~~</p>
 
                 
               </div>

@@ -61,6 +61,7 @@
 
   
 <link rel="stylesheet" href="/css/indeximg-hover.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css">
 
 
 
@@ -258,7 +259,7 @@
       
       <a class="index-excerpt " href="/2024/11/10/Hexo_Diary/" target="_self">
         <div>
-          引以为戒
+          记录一下你的诞生过程
         </div>
       </a>
 
@@ -503,7 +504,7 @@
               }
             }
             if(result['from_who']===null) result['from_who']='';
-            apiText ? typing(apiText+ '<br /> <h4>'+ '--' +result['from_who']+'「'+result['from']+'」'+'</h4>') : typing(text);
+            apiText ? typing(apiText+ '<br /> <h5>'+ '--' +result['from_who']+'「'+result['from']+'」'+'</h5>') : typing(text);
           },
           error: function(xhr, status, error) {
             if (error) {
