@@ -255,7 +255,7 @@
 <article class="page-content">
   <!-- 简单示例 (id, server, type)  -->
 
-    <div id="aplayer-CScuMawB" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-kMBkFIXL" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="12588418416" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div>
 
@@ -269,26 +269,54 @@
       
   <div id="valine"></div>
   <script type="text/javascript">
-    Fluid.utils.loadComments('#valine', function() {
-      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
-        var options = Object.assign(
-          {"appId":"SbQh9iFmCWxD1A6ISBTs6rdw-gzGzoHsz","appKey":"rXJKErDoD1Ikqt5vq5ShF5xK","path":"window.location.pathname","placeholder":"遗憾莫过于难忘你的背影，却找不到你来过的痕迹 ...","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://sbqh9ifm.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
-          {
-            el: "#valine",
-            path: window.location.pathname
-          }
-        )
-        new Valine(options);
-        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
-          var imgSelector = '#valine .vcontent img:not(.vemoji)';
-          Fluid.plugins.imageCaption(imgSelector);
-          Fluid.plugins.fancyBox(imgSelector);
-        })
+    // 检查页面是否已解密或非加密页面
+    function checkEncryption() {
+      const encryptDiv = document.getElementById('hexo-blog-encrypt');
+      
+      // 如果页面没有加密内容，直接初始化评论
+      if (!encryptDiv) {
+        initValine();
+        return;
+      }
+      
+      // 如果页面有加密内容，但已经解密（可能是通过localStorage自动解密）
+      if (encryptDiv && encryptDiv.style.display === 'inline') {
+        initValine();
+        return;
+      }
+      
+      // 监听解密事件
+      window.addEventListener('hexo-blog-decrypt', function() {
+        // 解密后初始化评论
+        initValine();
       });
-    });
+    }
+
+    // 初始化Valine的函数
+    function initValine() {
+      Fluid.utils.loadComments('#valine', function() {
+        Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+          var options = Object.assign(
+            {"appId":"SbQh9iFmCWxD1A6ISBTs6rdw-gzGzoHsz","appKey":"rXJKErDoD1Ikqt5vq5ShF5xK","path":"window.location.pathname","placeholder":"遗憾莫过于难忘你的背影，却找不到你来过的痕迹 ...","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://sbqh9ifm.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+            {
+              el: "#valine",
+              path: window.location.pathname
+            }
+          )
+          new Valine(options);
+          Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+            var imgSelector = '#valine .vcontent img:not(.vemoji)';
+            Fluid.plugins.imageCaption(imgSelector);
+            Fluid.plugins.fancyBox(imgSelector);
+          })
+        });
+      });
+    }
+
+    // 页面加载完成后执行检查
+    document.addEventListener('DOMContentLoaded', checkEncryption);
   </script>
   <noscript>Please enable JavaScript to view the comments</noscript>
-
 
     </article>
   
