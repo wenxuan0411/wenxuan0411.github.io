@@ -19,11 +19,15 @@
   <meta name="author" content="Wenxuan">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="标签 - Hexo-Fluid">
-<meta property="og:url" content="https://wenxuan0411.github.io/tags/Hexo-Fluid/index.html">
+    <meta name="description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录       .gallery-container {   padding: 20px; }  .gallery {   display: grid;   grid-template-columns: repeat(auto-fill, minmax">
+<meta property="og:type" content="website">
+<meta property="og:title" content="相册">
+<meta property="og:url" content="https://wenxuan0411.github.io/photos/index.html">
 <meta property="og:site_name" content="文轩">
+<meta property="og:description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录       .gallery-container {   padding: 20px; }  .gallery {   display: grid;   grid-template-columns: repeat(auto-fill, minmax">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-07T11:21:23.683Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -31,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>标签 - Hexo-Fluid - 文轩</title>
+  <title>相册 - 文轩</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -103,7 +107,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 80vh;">
+<div class="header-inner" style="height: 60vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -227,23 +231,19 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">标签 - Hexo-Fluid</span>
+            <span id="subtitle">相册</span>
           
         </div>
 
         
       </div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
       
     </div>
   </div>
@@ -264,23 +264,205 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 1 篇文章</p>
-  <hr>
-  
-  
-    
-      
-      <p class="h5">2024</p>
-    
-    <a href="/2024/11/10/Hexo_Diary/" class="list-group-item list-group-item-action">
-      <time>11-10</time>
-      <div class="list-group-item-title">我的Hexo建站日记</div>
-    </a>
-  
+<article class="page-content">
+  <div class="gallery-container">
+  <div class="gallery">
+    <!-- 这里将动态加载照片 -->
+  </div>
+  <div class="loading-message" style="text-align: center; padding: 20px; display: none;">
+    正在加载照片...
+  </div>
+  <div class="error-message" style="text-align: center; padding: 20px; display: none; color: #ff4d4f;">
+    暂无照片，请先添加照片到 source/images/photos 目录
+  </div>
 </div>
 
+<style>
+.gallery-container {
+  padding: 20px;
+}
 
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  background: #f5f5f5;
+  min-height: 250px;
+}
+
+.gallery-item:hover {
+  transform: scale(1.02);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-item .caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .caption {
+  opacity: 1;
+}
+
+/* 添加点击放大效果 */
+.gallery-item img {
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close {
+  position: absolute;
+  right: 25px;
+  top: 10px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+
+<!-- 添加模态框用于图片放大 -->
+<div id="imageModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const gallery = document.querySelector('.gallery');
+  const loadingMessage = document.querySelector('.loading-message');
+  const errorMessage = document.querySelector('.error-message');
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  const closeBtn = document.querySelector('.close');
+
+  // 显示加载消息
+  loadingMessage.style.display = 'block';
+
+  // 这里可以添加照片数据
+  const photos = [
+    {
+      url: '/images/photos/图片4.png',
+      caption: '照片描述 1'
+    },
+    {
+      url: '/images/photos/图片5.png',
+      caption: '照片描述 2'
+    }
+    // 添加更多照片...
+  ];
+
+  // 检查是否有照片
+  if (photos.length === 0) {
+    loadingMessage.style.display = 'none';
+    errorMessage.style.display = 'block';
+    return;
+  }
+
+  // 创建图片元素并检查加载状态
+  let loadedImages = 0;
+  photos.forEach(photo => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    
+    const img = document.createElement('img');
+    img.src = photo.url;
+    img.alt = photo.caption;
+    
+    // 添加图片加载事件
+    img.onload = function() {
+      loadedImages++;
+      if (loadedImages === photos.length) {
+        loadingMessage.style.display = 'none';
+      }
+    };
+    
+    img.onerror = function() {
+      loadedImages++;
+      if (loadedImages === photos.length) {
+        loadingMessage.style.display = 'none';
+        if (gallery.children.length === 0) {
+          errorMessage.style.display = 'block';
+        }
+      }
+    };
+    
+    const caption = document.createElement('div');
+    caption.className = 'caption';
+    caption.textContent = photo.caption;
+    
+    item.appendChild(img);
+    item.appendChild(caption);
+    gallery.appendChild(item);
+    
+    // 添加点击放大功能
+    img.onclick = function() {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    }
+  });
+
+  // 关闭模态框
+  closeBtn.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // 点击模态框外部关闭
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+});
+</script> 
+
+  
+
+</article>
 
 
 
