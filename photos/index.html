@@ -27,7 +27,7 @@
 <meta property="og:description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录       .gallery-container {   padding: 20px; }  .gallery {   display: grid;   grid-template-columns: repeat(auto-fill, minmax">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-07T11:21:23.683Z">
+<meta property="article:modified_time" content="2025-05-07T13:05:47.644Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -366,6 +366,7 @@
 </style>
 
 <!-- 添加模态框用于图片放大 -->
+
 <div id="imageModal" class="modal">
   <span class="close">&times;</span>
   <img class="modal-content" id="modalImage">
@@ -379,18 +380,17 @@ document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImage');
   const closeBtn = document.querySelector('.close');
-
   // 显示加载消息
   loadingMessage.style.display = 'block';
 
   // 这里可以添加照片数据
   const photos = [
     {
-      url: '/images/photos/图片4.png',
+      url: '/images/photos/4.png',
       caption: '照片描述 1'
     },
     {
-      url: '/images/photos/图片5.png',
+      url: '/images/photos/5.png',
       caption: '照片描述 2'
     }
     // 添加更多照片...
