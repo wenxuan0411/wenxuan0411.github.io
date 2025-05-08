@@ -19,19 +19,25 @@
   <meta name="author" content="Wenxuan">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="https://wenxuan0411.github.io/tags/index.html">
+    <meta name="description" content="我的相册集   这里记录着生活的美好瞬间                  .albums-container {   padding: 20px;   max-width: 1200px;   margin: 0 auto; }  .page-title {   font-size: 2.5rem;   margin-bottom: 10px;   color: var(--post-he">
+<meta property="og:type" content="website">
+<meta property="og:title" content="相册集">
+<meta property="og:url" content="https://wenxuan0411.github.io/albums/index.html">
 <meta property="og:site_name" content="文轩">
+<meta property="og:description" content="我的相册集   这里记录着生活的美好瞬间                  .albums-container {   padding: 20px;   max-width: 1200px;   margin: 0 auto; }  .page-title {   font-size: 2.5rem;   margin-bottom: 10px;   color: var(--post-he">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wenxuan0411.github.io/albums/$%7Balbum.cover%7D">
+<meta property="article:published_time" content="2024-05-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-08T10:10:17.888Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://wenxuan0411.github.io/albums/$%7Balbum.cover%7D">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>标签 - 文轩</title>
+  <title>相册集 - 文轩</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -103,7 +109,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 80vh;">
+<div class="header-inner" style="height: 60vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -227,23 +233,19 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">标签</span>
+            <span id="subtitle">相册集</span>
           
         </div>
 
         
       </div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
       
     </div>
   </div>
@@ -264,9 +266,194 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center tagcloud">
-  <a href="/tags/Fluid/" style="font-size: 25px; color: #bbe">Fluid</a> <a href="/tags/Hexo/" style="font-size: 25px; color: #bbe">Hexo</a> <a href="/tags/Hexo-Fluid/" style="font-size: 25px; color: #bbe">Hexo-Fluid</a>
+<article class="page-content">
+  <div class="albums-container">
+  <h1 class="page-title text-center">我的相册集</h1>
+  <p class="page-subtitle text-center">这里记录着生活的美好瞬间</p>
+  
+  <div class="albums-grid">
+    <!-- 相册集列表，点击进入各个相册详情页 -->
+  </div>
 </div>
+
+<style>
+.albums-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--post-heading-color, #1a202c);
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: var(--sec_text_color, #718096);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.album-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  background-color: #fff;
+  position: relative;
+}
+
+.album-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.album-cover {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.album-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.album-card:hover .album-cover img {
+  transform: scale(1.05);
+}
+
+.album-info {
+  padding: 15px;
+}
+
+.album-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text_color, #3c4858);
+}
+
+.album-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--sec_text_color, #718096);
+  font-size: 0.9rem;
+}
+
+.album-count {
+  display: flex;
+  align-items: center;
+}
+
+.album-count i {
+  margin-right: 5px;
+}
+
+.album-date {
+  font-style: italic;
+}
+
+.album-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  z-index: 10;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 相册数据数组
+  const albums = [
+    {
+      id: 'nature',
+      title: '自然风光',
+      cover: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e',
+      date: '2024-05-08',
+      count: 12,
+      isNew: true,
+      description: '大自然的奇妙景观'
+    },
+    {
+      id: 'city',
+      title: '城市风景',
+      cover: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b',
+      date: '2024-05-01',
+      count: 8,
+      isNew: false,
+      description: '现代都市的迷人魅力'
+    },
+    {
+      id: 'food',
+      title: '美食记录',
+      cover: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445',
+      date: '2024-04-20',
+      count: 15,
+      isNew: false,
+      description: '各地美食探索'
+    }
+    // 可以继续添加更多相册
+  ];
+
+  const albumsGrid = document.querySelector('.albums-grid');
+  
+  // 为每个相册创建卡片
+  albums.forEach(album => {
+    const albumCard = document.createElement('a');
+    albumCard.className = 'album-card';
+    albumCard.href = `/albums/${album.id}/`;
+    albumCard.onclick = function(e) {
+      // 使用window.location手动处理导航
+      e.preventDefault();
+      window.location.href = `/albums/${album.id}/`;
+    };
+    
+    // 构建相册卡片的HTML内容
+    albumCard.innerHTML = `
+      <div class="album-cover">
+        <img src="${album.cover}" srcset="/img/loading.gif" lazyload alt="${album.title}" loading="lazy">
+        ${album.isNew ? '<span class="album-badge">New</span>' : ''}
+      </div>
+      <div class="album-info">
+        <h3 class="album-title">${album.title}</h3>
+        <p>${album.description}</p>
+        <div class="album-meta">
+          <span class="album-count"><i class="fas fa-image"></i> ${album.count}张</span>
+          <span class="album-date">${album.date}</span>
+        </div>
+      </div>
+    `;
+    
+    albumsGrid.appendChild(albumCard);
+  });
+});
+</script> 
+
+  
+
+</article>
+
+
 
               </div>
             </div>

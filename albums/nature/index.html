@@ -19,19 +19,26 @@
   <meta name="author" content="Wenxuan">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="https://wenxuan0411.github.io/tags/index.html">
+    <meta name="description" content="大自然的奇妙景观">
+<meta property="og:type" content="website">
+<meta property="og:title" content="自然风光">
+<meta property="og:url" content="https://wenxuan0411.github.io/albums/nature/index.html">
 <meta property="og:site_name" content="文轩">
+<meta property="og:description" content="大自然的奇妙景观">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.unsplash.com/photo-1469474968028-56623f02e42e">
+<meta property="og:image" content="https://wenxuan0411.github.io/albums/nature/$%7Bphoto.src%7D">
+<meta property="article:published_time" content="2024-05-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-08T10:15:13.563Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1469474968028-56623f02e42e">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>标签 - 文轩</title>
+  <title>自然风光 - 文轩</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -103,7 +110,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 80vh;">
+<div class="header-inner" style="height: 60vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -227,23 +234,19 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">标签</span>
+            <span id="subtitle">自然风光</span>
           
         </div>
 
         
       </div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
       
     </div>
   </div>
@@ -264,9 +267,377 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center tagcloud">
-  <a href="/tags/Fluid/" style="font-size: 25px; color: #bbe">Fluid</a> <a href="/tags/Hexo/" style="font-size: 25px; color: #bbe">Hexo</a> <a href="/tags/Hexo-Fluid/" style="font-size: 25px; color: #bbe">Hexo-Fluid</a>
+<article class="page-content">
+  <div class="album-header">
+  <div class="album-cover">
+    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" srcset="/img/loading.gif" lazyload alt="自然风光">
+  </div>
+  <div class="album-info">
+    <h1>自然风光</h1>
+    <p class="album-description">大自然的奇妙景观</p>
+    <div class="album-meta">
+      <span class="album-date">创建于: 2024-05-08</span>
+      <span class="album-count">共 12 张照片</span>
+    </div>
+    <a href="/albums/" class="back-link"><i class="fas fa-arrow-left"></i> 返回相册集</a>
+  </div>
 </div>
+
+<div class="photos-grid" id="photos-gallery">
+  <!-- 照片网格将由JS动态填充 -->
+</div>
+
+<style>
+.album-header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  gap: 30px;
+}
+
+.album-cover {
+  flex: 0 0 300px;
+}
+
+.album-cover img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.album-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.album-info h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: var(--post-heading-color, #1a202c);
+}
+
+.album-description {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: var(--sec_text_color, #718096);
+}
+
+.album-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+  color: var(--sec_text_color, #718096);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--button_hover_bg_color, #f2f3f5);
+  border-radius: 30px;
+  color: var(--text_color, #3c4858);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  background-color: var(--button_hover_bg_color_dark, #46647e);
+  color: white;
+  text-decoration: none;
+}
+
+/* 简单CSS网格布局，不依赖Masonry */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.photo-item {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.photo-item img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.03);
+}
+
+.photo-caption {
+  padding: 10px 15px;
+  background: white;
+  font-size: 0.9rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.photo-caption h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+}
+
+.photo-caption p {
+  margin: 0;
+  color: #666;
+}
+
+.photo-meta {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .photos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* PhotoSwipe样式覆盖 */
+.pswp__bg {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.pswp__caption-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pswp__caption-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.pswp__caption-content p {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.pswp-caption-meta {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}
+</style>
+
+<!-- 引入PhotoSwipe库 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/umd/photoswipe.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/umd/photoswipe-lightbox.umd.min.js"></script>
+
+<script>
+// 在DOM加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+  // 相册中的照片数据
+  const photos = [
+    {
+      src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05',
+      width: 1920,
+      height: 1280,
+      title: '日出时分的山脉',
+      description: '清晨日出时分，山脉笼罩在金色的阳光下',
+      date: '2024-05-01'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1501854140801-50d01698950b',
+      width: 1920,
+      height: 1080,
+      title: '湖泊风光',
+      description: '平静的湖面倒映着远处的山脉',
+      date: '2024-05-02'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e',
+      width: 1920,
+      height: 1280,
+      title: '田野与云彩',
+      description: '蓝天白云下的金色麦田',
+      date: '2024-05-03'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d',
+      width: 1920,
+      height: 1080,
+      title: '雨后山谷',
+      description: '雨后的山谷被薄雾笼罩，透出几分神秘感',
+      date: '2024-05-04'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3',
+      width: 1920,
+      height: 1080,
+      title: '雪山与针叶林',
+      description: '郁郁葱葱的针叶林与远处的雪山形成鲜明对比',
+      date: '2024-05-05'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1497449493050-aad1e7cad165',
+      width: 1920,
+      height: 1280,
+      title: '暴风雨前的天空',
+      description: '厚重的积雨云下，田野笼罩在不安的气氛中',
+      date: '2024-05-06'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e',
+      width: 1920,
+      height: 1280,
+      title: '森林阳光',
+      description: '阳光透过树叶，洒落在森林的地面上',
+      date: '2024-05-07'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9',
+      width: 1920,
+      height: 1280,
+      title: '茂密森林',
+      description: '郁郁葱葱的森林，充满了生机',
+      date: '2024-05-08'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8',
+      width: 1920,
+      height: 1280,
+      title: '日落云彩',
+      description: '夕阳西下，晚霞映红了天空',
+      date: '2024-05-09'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1471513671800-b09c87e1497c',
+      width: 1920,
+      height: 1280,
+      title: '山间薄雾',
+      description: '清晨的山间，薄雾缭绕，宛如仙境',
+      date: '2024-05-10'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07',
+      width: 1920,
+      height: 1280,
+      title: '青翠山谷',
+      description: '绿意盎然的山谷，生机勃勃',
+      date: '2024-05-11'
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1565118531796-763e5082d113',
+      width: 1920,
+      height: 1280,
+      title: '海岸线',
+      description: '蔚蓝的海洋与金色的沙滩相接，形成美丽的海岸线',
+      date: '2024-05-12'
+    }
+  ];
+  
+  // 获取相册容器
+  const galleryElement = document.getElementById('photos-gallery');
+  
+  // 动态生成HTML
+  let galleryHTML = '';
+  photos.forEach((photo, index) => {
+    galleryHTML += `
+      <div class="photo-item" data-pswp-width="${photo.width}" data-pswp-height="${photo.height}" data-index="${index}">
+        <img src="${photo.src}" srcset="/img/loading.gif" lazyload alt="${photo.title}" loading="lazy">
+        <div class="photo-caption">
+          <h3>${photo.title}</h3>
+          <p>${photo.description}</p>
+          <div class="photo-meta">拍摄于: ${photo.date}</div>
+        </div>
+      </div>
+    `;
+  });
+  
+  // 将生成的HTML添加到相册容器
+  galleryElement.innerHTML = galleryHTML;
+  
+  // 设置PhotoSwipe Lightbox数据
+  const options = {
+    gallery: '#photos-gallery',
+    children: '.photo-item',
+    showHideAnimationType: 'fade',
+    pswpModule: PhotoSwipe,
+    mouseMovePan: true,
+    padding: {top: 20, bottom: 20, left: 20, right: 20},
+    
+    // 图片数据源
+    dataSource: photos.map(photo => ({
+      src: photo.src,
+      width: photo.width,
+      height: photo.height,
+      alt: photo.title,
+      caption: `
+        <div class="pswp-caption-content">
+          <h3>${photo.title}</h3>
+          <p>${photo.description}</p>
+          <div class="pswp-caption-meta">拍摄于: ${photo.date}</div>
+        </div>
+      `
+    })),
+    
+    // 其他设置
+    clickToCloseNonZoomable: true,
+    initialZoomLevel: 'fit',
+    secondaryZoomLevel: 2,
+    maxZoomLevel: 4,
+  };
+  
+  // 初始化PhotoSwipe Lightbox
+  const lightbox = new PhotoSwipeLightbox(options);
+  
+  // 添加点击事件，打开灯箱
+  document.querySelectorAll('.photo-item').forEach((item, index) => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      lightbox.loadAndOpen(index);
+    });
+  });
+  
+  // 初始化lightbox
+  lightbox.init();
+});
+</script> 
+
+  
+
+</article>
+
+
 
               </div>
             </div>
