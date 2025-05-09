@@ -27,9 +27,9 @@
 <meta property="og:description" content="大自然的奇妙景观">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://images.unsplash.com/photo-1469474968028-56623f02e42e">
-<meta property="og:image" content="https://wenxuan0411.github.io/albums/nature/$%7Bphoto.src%7D">
+<meta property="og:image" content="https://wenxuan0411.github.io/albums/nature/$%7BsmallImageUrl%7D">
 <meta property="article:published_time" content="2024-05-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-08T10:15:13.563Z">
+<meta property="article:modified_time" content="2025-05-09T05:55:09.887Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1469474968028-56623f02e42e">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"wenxuan0411.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"->"},"progressbar":{"enable":true,"height_px":5,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"wenxuan0411.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"->"},"progressbar":{"enable":true,"height_px":5,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -181,7 +181,7 @@
           
             <li class="nav-item">
               <a class="nav-link" href="/albums/" target="_self">
-                <i class="iconfont icon-image-fill"></i>
+                <i class="iconfont icon-image"></i>
                 <span>相册集</span>
               </a>
             </li>
@@ -270,7 +270,7 @@
 <article class="page-content">
   <div class="album-header">
   <div class="album-cover">
-    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" srcset="/img/loading.gif" lazyload alt="自然风光">
+    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" alt="自然风光">
   </div>
   <div class="album-info">
     <h1>自然风光</h1>
@@ -363,16 +363,21 @@
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
-  cursor: pointer;
   background: #fff;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .photo-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.photo-item a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
 }
 
 .photo-item img {
@@ -383,7 +388,23 @@
   transition: transform 0.5s ease;
 }
 
-.photo-item:hover img {
+.thumb-container {
+  overflow: hidden;
+  position: relative;
+  background-color: #f0f0f0;
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+
+.thumb-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.photo-item:hover .thumb-container img {
   transform: scale(1.03);
 }
 
@@ -457,14 +478,15 @@
 }
 </style>
 
+<!-- 引入必要的库 -->
+<script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js"></script>
 <!-- 引入PhotoSwipe库 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe.css">
 <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/umd/photoswipe.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/umd/photoswipe-lightbox.umd.min.js"></script>
 
 <script>
-// 在DOM加载完成后执行
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   // 相册中的照片数据
   const photos = [
     {
@@ -568,67 +590,40 @@ document.addEventListener('DOMContentLoaded', function() {
   // 获取相册容器
   const galleryElement = document.getElementById('photos-gallery');
   
-  // 动态生成HTML
-  let galleryHTML = '';
+  // 生成相册图片HTML
+  let photosHTML = '';
   photos.forEach((photo, index) => {
-    galleryHTML += `
-      <div class="photo-item" data-pswp-width="${photo.width}" data-pswp-height="${photo.height}" data-index="${index}">
-        <img src="${photo.src}" srcset="/img/loading.gif" lazyload alt="${photo.title}" loading="lazy">
-        <div class="photo-caption">
-          <h3>${photo.title}</h3>
-          <p>${photo.description}</p>
-          <div class="photo-meta">拍摄于: ${photo.date}</div>
-        </div>
+    // 直接使用原图的小尺寸版本，不使用懒加载
+    const smallImageUrl = `${photo.src}?w=400&h=300&fit=crop`;
+    
+    photosHTML += `
+      <div class="photo-item">
+        <a href="${photo.src}" 
+           data-pswp-width="${photo.width}" 
+           data-pswp-height="${photo.height}" 
+           target="_blank">
+          <div class="thumb-container">
+            <img src="${smallImageUrl}" alt="${photo.title}" loading="eager">
+          </div>
+          <div class="photo-caption">
+            <h3>${photo.title}</h3>
+            <p>${photo.description}</p>
+            <div class="photo-meta">拍摄于: ${photo.date}</div>
+          </div>
+        </a>
       </div>
     `;
   });
   
   // 将生成的HTML添加到相册容器
-  galleryElement.innerHTML = galleryHTML;
+  galleryElement.innerHTML = photosHTML;
   
-  // 设置PhotoSwipe Lightbox数据
-  const options = {
+  // 使用最简单的方式初始化PhotoSwipe
+  const lightbox = new PhotoSwipeLightbox({
     gallery: '#photos-gallery',
-    children: '.photo-item',
-    showHideAnimationType: 'fade',
-    pswpModule: PhotoSwipe,
-    mouseMovePan: true,
-    padding: {top: 20, bottom: 20, left: 20, right: 20},
-    
-    // 图片数据源
-    dataSource: photos.map(photo => ({
-      src: photo.src,
-      width: photo.width,
-      height: photo.height,
-      alt: photo.title,
-      caption: `
-        <div class="pswp-caption-content">
-          <h3>${photo.title}</h3>
-          <p>${photo.description}</p>
-          <div class="pswp-caption-meta">拍摄于: ${photo.date}</div>
-        </div>
-      `
-    })),
-    
-    // 其他设置
-    clickToCloseNonZoomable: true,
-    initialZoomLevel: 'fit',
-    secondaryZoomLevel: 2,
-    maxZoomLevel: 4,
-  };
-  
-  // 初始化PhotoSwipe Lightbox
-  const lightbox = new PhotoSwipeLightbox(options);
-  
-  // 添加点击事件，打开灯箱
-  document.querySelectorAll('.photo-item').forEach((item, index) => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      lightbox.loadAndOpen(index);
-    });
+    children: 'a',
+    pswpModule: PhotoSwipe
   });
-  
-  // 初始化lightbox
   lightbox.init();
 });
 </script> 
@@ -740,10 +735,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
 
 
 
