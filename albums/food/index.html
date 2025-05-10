@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445">
 <meta property="og:image" content="https://wenxuan0411.github.io/albums/food/$%7BsmallImageUrl%7D">
 <meta property="article:published_time" content="2024-04-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-09T05:55:12.672Z">
+<meta property="article:modified_time" content="2025-05-09T17:43:01.067Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445">
@@ -363,6 +363,7 @@
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
   background: #fff;
+  position: relative;
 }
 
 .photo-item:hover {
@@ -371,11 +372,11 @@
 }
 
 .photo-item a {
-  display: flex;
-  flex-direction: column;
+  display: block;
   height: 100%;
   color: inherit;
   text-decoration: none;
+  position: relative;
 }
 
 .thumb-container {
@@ -399,23 +400,27 @@
 }
 
 .photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  color: white;
   padding: 10px 15px;
-  background: white;
-  font-size: 0.9rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
-.photo-caption h3 {
-  margin: 0 0 5px 0;
-  font-size: 1.1rem;
+.photo-item:hover .photo-caption {
+  opacity: 1;
 }
 
 .photo-caption p {
   margin: 0;
-  color: #666;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .photo-meta {
@@ -590,9 +595,7 @@
               <img src="${smallImageUrl}" alt="${photo.title}" loading="eager">
             </div>
             <div class="photo-caption">
-              <h3>${photo.title}</h3>
               <p>${photo.description}</p>
-              <div class="photo-meta">拍摄于: ${photo.date}</div>
             </div>
           </a>
         </div>
@@ -601,12 +604,36 @@
     
     photoContainer.innerHTML = photosHTML;
     
-    // 使用最简单的方式初始化PhotoSwipe
+    // 初始化PhotoSwipe
     const lightbox = new PhotoSwipeLightbox({
       gallery: '#photos-grid',
       children: 'a',
-      pswpModule: PhotoSwipe
+      pswpModule: PhotoSwipe,
+      showHideAnimationType: 'fade',
+      showAnimationDuration: 300,
+      hideAnimationDuration: 300
     });
+    
+    // 自定义标题区域只显示描述
+    lightbox.on('uiRegister', function() {
+      lightbox.pswp.ui.registerElement({
+        name: 'custom-caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        html: '',
+        onInit: (el, pswp) => {
+          lightbox.pswp.on('change', () => {
+            const currSlideIndex = lightbox.pswp.currIndex;
+            const photo = photos[currSlideIndex];
+            el.innerHTML = `<div class="pswp__caption-content">
+              <p style="color: white; font-size: 1rem;">${photo.description}</p>
+            </div>`;
+          });
+        }
+      });
+    });
+    
     lightbox.init();
   });
 </script>

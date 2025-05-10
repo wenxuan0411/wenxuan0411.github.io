@@ -19,15 +19,15 @@
   <meta name="author" content="Wenxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录          &times;             &#x2F;**  * 智能相册布局管理器  * 基于图片原始宽高比实现自适应网格系统  *&#x2F; class SmartGalleryLayout {   constructor(config &#x3D;">
+    <meta name="description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录       .gallery-container {   padding: 20px; }  .gallery {   display: grid;   grid-template-columns: repeat(auto-fill, minmax">
 <meta property="og:type" content="website">
 <meta property="og:title" content="相册">
 <meta property="og:url" content="https://wenxuan0411.github.io/photos/index.html">
 <meta property="og:site_name" content="文轩">
-<meta property="og:description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录          &times;             &#x2F;**  * 智能相册布局管理器  * 基于图片原始宽高比实现自适应网格系统  *&#x2F; class SmartGalleryLayout {   constructor(config &#x3D;">
+<meta property="og:description" content="正在加载照片...           暂无照片，请先添加照片到 source&#x2F;images&#x2F;photos 目录       .gallery-container {   padding: 20px; }  .gallery {   display: grid;   grid-template-columns: repeat(auto-fill, minmax">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-09T06:20:05.532Z">
+<meta property="article:modified_time" content="2025-05-09T17:18:32.223Z">
 <meta property="article:author" content="Wenxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -265,270 +265,145 @@
                 
 
 <article class="page-content">
-  <!-- 引入相册样式 -->
-<link rel="stylesheet" href="/css/gallery.css">
-
-<div class="gallery-container">
-  <div class="gallery" id="smart-gallery">
+  <div class="gallery-container">
+  <div class="gallery">
     <!-- 这里将动态加载照片 -->
   </div>
-  <div class="loading-message" style="display: none;">
+  <div class="loading-message" style="text-align: center; padding: 20px; display: none;">
     正在加载照片...
   </div>
-  <div class="error-message" style="display: none;">
+  <div class="error-message" style="text-align: center; padding: 20px; display: none; color: #ff4d4f;">
     暂无照片，请先添加照片到 source/images/photos 目录
   </div>
 </div>
 
+<style>
+.gallery-container {
+  padding: 20px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  background: #f5f5f5;
+  min-height: 250px;
+}
+
+.gallery-item:hover {
+  transform: scale(1.02);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-item .caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .caption {
+  opacity: 1;
+}
+
+/* 添加点击放大效果 */
+.gallery-item img {
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 80vw;   /* 最大宽度为视口宽度的80% */
+  max-height: 80vh;  /* 最大高度为视口高度的80% */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.close {
+  position: fixed;
+  right: 40px;
+  top: 40px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1100;
+  text-shadow: 0 2px 8px #000;
+  padding: 16px;                /* 扩大点击区域 */
+  background: rgba(0,0,0,0.15); /* 半透明背景，鼠标悬停时可见 */
+  border-radius: 50%;           /* 圆形点击区域 */
+  transition: background 0.2s;
+}
+.close:hover {
+  background: rgba(0,0,0,0.35); /* 悬停时更明显 */
+}
+</style>
+
 <!-- 添加模态框用于图片放大 -->
+
 <div id="imageModal" class="modal">
   <span class="close">&times;</span>
   <img class="modal-content" id="modalImage">
-  <div id="modalCaption"></div>
 </div>
 
-<!-- 引入相册脚本 -->
-<script src="/js/gallery.js"></script>
-
 <script>
-/**
- * 智能相册布局管理器
- * 基于图片原始宽高比实现自适应网格系统
- */
-class SmartGalleryLayout {
-  constructor(config = {}) {
-    this.config = {
-      containerId: 'smart-gallery',
-      rowHeight: 250,          // 基准行高
-      rowHeightTolerance: 50,  // 行高差异容忍度
-      maxItemsPerRow: 5,       // 桌面端最大列数
-      minItemsPerRow: 3,       // 桌面端最小列数
-      preferHorizontal: true,  // 优先横向图片作为行主导
-      horizontalRatio: 1.2,    // 判定为横向图片的比例阈值
-      ...config
-    };
-    
-    this.container = document.getElementById(this.config.containerId);
-    this.items = [];
-    this.rows = [];
-    this.observer = null;
-    this.containerWidth = 0;
-    
-    // 初始化Intersection Observer
-    this._initObserver();
-    
-    // 监听窗口大小变化，重新计算布局
-    window.addEventListener('resize', this._debounce(this.recalculateLayout.bind(this), 200));
-  }
-  
-  /**
-   * 初始化视口监听器
-   */
-  _initObserver() {
-    if ('IntersectionObserver' in window) {
-      this.observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const item = entry.target;
-            const img = item.querySelector('img');
-            
-            if (img && img.classList.contains('loading')) {
-              // 移除loading类，应用渐变效果
-              setTimeout(() => {
-                img.classList.remove('loading');
-                if (item.classList.contains('portrait')) {
-                  item.classList.add('loaded');
-                }
-              }, 100);
-            }
-            
-            // 一旦显示，停止观察
-            this.observer.unobserve(item);
-          }
-        });
-      }, {
-        rootMargin: '200px 0px',
-        threshold: 0.01
-      });
-    }
-  }
-  
-  /**
-   * 设置图片数据
-   * @param {Array} photos - 图片数据数组
-   */
-  setPhotos(photos) {
-    this.photos = photos;
-    this.render();
-  }
-  
-  /**
-   * 渲染相册
-   */
-  render() {
-    if (!this.photos || !this.photos.length) return;
-    
-    this.container.innerHTML = '';
-    this.items = [];
-    
-    // 预处理图片数据，计算宽高比
-    const processedPhotos = this.photos.map(photo => {
-      const ratio = photo.height / photo.width;
-      return {
-        ...photo,
-        ratio,
-        isHorizontal: ratio < this.config.horizontalRatio
-      };
-    });
-    
-    // 优先处理横向图片
-    if (this.config.preferHorizontal) {
-      processedPhotos.sort((a, b) => {
-        if (a.isHorizontal && !b.isHorizontal) return -1;
-        if (!a.isHorizontal && b.isHorizontal) return 1;
-        return 0;
-      });
-    }
-    
-    // 创建并添加图片元素
-    processedPhotos.forEach(photo => {
-      const item = document.createElement('div');
-      const isPortrait = photo.ratio > 1.5;
-      
-      item.className = `gallery-item ${isPortrait ? 'portrait' : ''}`;
-      item.dataset.ratio = photo.ratio;
-      item.dataset.width = photo.width;
-      item.dataset.height = photo.height;
-      
-      const img = document.createElement('img');
-      img.src = photo.url;
-      img.alt = photo.caption;
-      img.classList.add('loading');
-      img.dataset.width = photo.width;
-      img.dataset.height = photo.height;
-      
-      const caption = document.createElement('div');
-      caption.className = 'caption';
-      caption.textContent = photo.caption;
-      
-      item.appendChild(img);
-      item.appendChild(caption);
-      this.container.appendChild(item);
-      
-      this.items.push(item);
-      
-      // 添加到视口监听
-      if (this.observer) {
-        this.observer.observe(item);
-      }
-      
-      // 添加点击事件
-      item.addEventListener('click', () => this.openModal(photo.url));
-    });
-    
-    // 计算初始布局
-    setTimeout(() => this.recalculateLayout(), 100);
-    
-    // 当所有图片加载完成后重新计算
-    Promise.all(Array.from(this.container.querySelectorAll('img'))
-      .filter(img => !img.complete)
-      .map(img => new Promise(resolve => {
-        img.onload = img.onerror = resolve;
-      }))
-    ).then(() => {
-      this.recalculateLayout();
-    });
-  }
-  
-  /**
-   * 重新计算布局
-   */
-  recalculateLayout() {
-    if (!this.items.length) return;
-    
-    this.containerWidth = this.container.clientWidth;
-    
-    // 获取当前显示的列数
-    const currentStyle = window.getComputedStyle(this.container);
-    const columns = parseInt(currentStyle.gridTemplateColumns.split(' ').length) || 1;
-    
-    // 计算每个图片项的span值
-    this.items.forEach(item => {
-      const ratio = parseFloat(item.dataset.ratio);
-      const rowSpan = Math.ceil((ratio * (this.containerWidth / columns)) / this.config.rowHeight);
-      
-      // 设置每个项的高度跨度
-      item.style.gridRowEnd = `span ${rowSpan}`;
-    });
-    
-    // 使用Web Worker预计算下一步布局（如果浏览器支持）
-    if (window.Worker) {
-      this._calculateOptimalLayoutWithWorker();
-    }
-  }
-  
-  /**
-   * 使用Web Worker预计算最佳布局
-   * 在实际应用中可以实现，这里做了简化处理
-   */
-  _calculateOptimalLayoutWithWorker() {
-    // 这里可以实现Web Worker逻辑
-    console.log('预计算布局方案（可以使用Web Worker实现）');
-  }
-  
-  /**
-   * 打开模态框
-   * @param {string} imageSrc - 图片URL
-   */
-  openModal(imageSrc) {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    
-    modalImg.src = imageSrc;
-    modal.style.display = 'block';
-    
-    // 添加平滑过渡
-    setTimeout(() => {
-      modal.classList.add('show');
-    }, 10);
-  }
-  
-  /**
-   * 函数防抖
-   */
-  _debounce(func, wait) {
-    let timeout;
-    return function() {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-  }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
+  const gallery = document.querySelector('.gallery');
   const loadingMessage = document.querySelector('.loading-message');
   const errorMessage = document.querySelector('.error-message');
   const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
   const closeBtn = document.querySelector('.close');
-  
   // 显示加载消息
   loadingMessage.style.display = 'block';
 
-  // 图片数据
+  // 这里可以添加照片数据
   const photos = [
     {
       url: 'https://pub-d6850f8222cd46a68d0f9c5edba0fbc6.r2.dev/%E5%9B%BE%E7%89%874.png',
-      caption: '照片描述 1',
-      width: 1200,
-      height: 800
+      caption: '照片描述 1'
     },
     {
       url: 'https://pub-d6850f8222cd46a68d0f9c5edba0fbc6.r2.dev/%E5%9B%BE%E7%89%875.png',
-      caption: '照片描述 2',
-      width: 800,
-      height: 1200
+      caption: '照片描述 2'
     }
     // 添加更多照片...
   ];
@@ -540,41 +415,60 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  // 初始化智能相册布局
-  const gallery = new SmartGalleryLayout({
-    containerId: 'smart-gallery',
-    rowHeight: 250,
-    rowHeightTolerance: 50,
-    preferHorizontal: true,
-    darkModeSelector: 'html.dark, html[data-user-color-scheme="dark"]'
+  // 创建图片元素并检查加载状态
+  let loadedImages = 0;
+  photos.forEach(photo => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    
+    const img = document.createElement('img');
+    img.src = photo.url;
+    img.alt = photo.caption;
+    
+    // 添加图片加载事件
+    img.onload = function() {
+      loadedImages++;
+      if (loadedImages === photos.length) {
+        loadingMessage.style.display = 'none';
+      }
+    };
+    
+    img.onerror = function() {
+      loadedImages++;
+      if (loadedImages === photos.length) {
+        loadingMessage.style.display = 'none';
+        if (gallery.children.length === 0) {
+          errorMessage.style.display = 'block';
+        }
+      }
+    };
+    
+    const caption = document.createElement('div');
+    caption.className = 'caption';
+    caption.textContent = photo.caption;
+    
+    item.appendChild(img);
+    item.appendChild(caption);
+    gallery.appendChild(item);
+    
+    // 添加点击放大功能
+    img.onclick = function() {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    }
   });
-  
-  // 设置照片并渲染
-  gallery.setPhotos(photos);
-  
-  // 所有图片加载完成后隐藏加载消息
-  setTimeout(() => {
-    loadingMessage.style.display = 'none';
-  }, 1000);
 
   // 关闭模态框
   closeBtn.onclick = function() {
-    gallery.closeModal();
+    modal.style.display = "none";
   }
 
   // 点击模态框外部关闭
   window.onclick = function(event) {
     if (event.target == modal) {
-      closeBtn.click();
+      modal.style.display = "none";
     }
   }
-  
-  // ESC键关闭模态框
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && modal.style.display === 'block') {
-      closeBtn.click();
-    }
-  });
 });
 </script> 
 
