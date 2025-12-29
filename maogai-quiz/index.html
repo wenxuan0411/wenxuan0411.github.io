@@ -2400,6 +2400,9 @@ D.经济建设
         const Zap = (props) => <Icon {...props} path={<><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></>} />;
         const Layers = (props) => <Icon {...props} path={<><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></>} />;
         const ShuffleIcon = (props) => <Icon {...props} path={<><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></>} />;
+        const Download = (props) => <Icon {...props} path={<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></>} />;
+        const FileText = (props) => <Icon {...props} path={<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></>} />;
+        const Upload = (props) => <Icon {...props} path={<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></>} />;
 
         // --- 页脚组件 ---
         const Footer = () => (
@@ -2463,6 +2466,105 @@ D.经济建设
             setAllAnswers({});
             setQuizMode(mode);
             setActiveTab('quiz');
+          };
+
+          // 导入错题文件的ref
+          const fileInputRef = React.useRef(null);
+          
+          // 解析导入的错题文件
+          const handleImportFile = (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const content = e.target.result;
+              const importedQuestions = parseImportedWrongQuestions(content);
+              
+              if (importedQuestions.length === 0) {
+                alert('未能从文件中解析出有效的错题，请确保文件格式正确。\n\n请使用本系统导出的错题文件。');
+                return;
+              }
+              
+              // 开始练习导入的错题
+              setActiveQuestions(importedQuestions);
+              setCurrentQIndex(0);
+              setSelectedOptions([]);
+              setQuizFinished(false);
+              setScore(0);
+              setShowFeedback(false);
+              setCurrentResult(null);
+              setAllAnswers({});
+              setQuizMode('batch');
+              setActiveTab('quiz');
+              
+              alert(`成功导入 ${importedQuestions.length} 道错题，开始练习！`);
+            };
+            reader.readAsText(file, 'UTF-8');
+            // 清空input以便重复选择同一文件
+            event.target.value = '';
+          };
+          
+          // 解析错题文件内容
+          const parseImportedWrongQuestions = (content) => {
+            const importedQuestions = [];
+            
+            // 按【错题 N】分割
+            const questionBlocks = content.split(/【错题\s*\d+】/).filter(block => block.trim());
+            
+            questionBlocks.forEach((block, idx) => {
+              try {
+                // 解析章节
+                const chapterMatch = block.match(/章节[：:]\s*(.+)/);
+                const chapter = chapterMatch ? chapterMatch[1].trim() : '导入的错题';
+                
+                // 解析题型
+                const typeMatch = block.match(/题型[：:]\s*(.+)/);
+                let type = 'single';
+                if (typeMatch) {
+                  const typeStr = typeMatch[1].trim();
+                  if (typeStr.includes('多选')) type = 'multi';
+                  else if (typeStr.includes('判断')) type = 'judge';
+                }
+                
+                // 解析题目
+                const questionMatch = block.match(/题目[：:]\s*([\s\S]*?)(?=\n\s*选项[：:]|\n\s*[✓✗\s]*[A-D]\.)/);
+                const question = questionMatch ? questionMatch[1].trim() : '';
+                
+                if (!question) return;
+                
+                // 解析选项
+                const options = [];
+                const optionMatches = block.matchAll(/[✓✗\s]*([A-D])\.\s*(.+)/g);
+                for (const match of optionMatches) {
+                  options.push(`${match[1]}. ${match[2].trim()}`);
+                }
+                
+                if (options.length === 0) return;
+                
+                // 解析正确答案
+                const answerMatch = block.match(/正确答案[：:]\s*([A-D,，\s]+)/);
+                let answer = [];
+                if (answerMatch) {
+                  answer = answerMatch[1].trim().split(/[,，\s]+/).filter(a => a && /^[A-D]$/.test(a));
+                }
+                
+                if (answer.length === 0) return;
+                
+                importedQuestions.push({
+                  id: `imported_${idx}_${Date.now()}`,
+                  chapter,
+                  type,
+                  question,
+                  options,
+                  answer
+                });
+              } catch (err) {
+                console.log('解析错题失败:', err);
+              }
+            });
+            
+            return importedQuestions;
           };
 
           const handleOptionSelect = (optionLabel) => {
@@ -2553,6 +2655,26 @@ D.经济建设
           useEffect(() => {
             const handleKeyDown = (e) => {
                 if (activeTab === 'quiz' && !quizFinished) {
+                    const currentQ = activeQuestions[currentQIndex];
+                    
+                    // ABCD 键选择选项（不在反馈状态时）
+                    if (!showFeedback && currentQ) {
+                        const keyUpper = e.key.toUpperCase();
+                        const validKeys = ['A', 'B', 'C', 'D'];
+                        const optionLabels = currentQ.options.map(opt => opt.split('.')[0].trim());
+                        
+                        if (validKeys.includes(keyUpper) && optionLabels.includes(keyUpper)) {
+                            e.preventDefault();
+                            // 找到对应的选项并触发选择
+                            const optionIndex = optionLabels.indexOf(keyUpper);
+                            if (optionIndex !== -1) {
+                                const option = currentQ.options[optionIndex];
+                                handleOptionSelect(option);
+                            }
+                        }
+                    }
+                    
+                    // 空格键提交/下一题（即时模式）
                     if (e.code === 'Space' || e.key === ' ') {
                         e.preventDefault(); 
                         if (quizMode === 'instant') {
@@ -2560,13 +2682,38 @@ D.经济建设
                             else if (selectedOptions.length > 0) handleSubmitAnswer();
                         }
                     }
-                    // 左右箭头键导航（批量模式）
-                    if (quizMode === 'batch') {
-                        if (e.key === 'ArrowLeft') {
-                            e.preventDefault();
+                    
+                    // Enter 键提交当前题目
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (quizMode === 'instant' && !showFeedback && selectedOptions.length > 0) {
+                            handleSubmitAnswer();
+                        }
+                    }
+                    
+                    // 左右箭头键导航
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        // 批量模式：始终可以切换；即时模式：提交后可以切换
+                        if (quizMode === 'batch') {
+                            if (currentQIndex > 0) {
+                                const prevIdx = currentQIndex - 1;
+                                setCurrentQIndex(prevIdx);
+                                setSelectedOptions(allAnswers[prevIdx] || []);
+                            }
+                        } else if (showFeedback) {
                             handlePrevQuestion();
-                        } else if (e.key === 'ArrowRight') {
-                            e.preventDefault();
+                        }
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        // 批量模式：始终可以切换；即时模式：提交后可以切换
+                        if (quizMode === 'batch') {
+                            if (currentQIndex < activeQuestions.length - 1) {
+                                const nextIdx = currentQIndex + 1;
+                                setCurrentQIndex(nextIdx);
+                                setSelectedOptions(allAnswers[nextIdx] || []);
+                            }
+                        } else if (showFeedback) {
                             handleNextQuestion();
                         }
                     }
@@ -2574,7 +2721,7 @@ D.经济建设
             };
             window.addEventListener('keydown', handleKeyDown);
             return () => window.removeEventListener('keydown', handleKeyDown);
-          }, [activeTab, quizFinished, showFeedback, selectedOptions, handleNextQuestion, handleSubmitAnswer, handlePrevQuestion, quizMode]);
+          }, [activeTab, quizFinished, showFeedback, selectedOptions, handleNextQuestion, handleSubmitAnswer, handlePrevQuestion, quizMode, activeQuestions, currentQIndex, handleOptionSelect, allAnswers]);
 
           const exitQuiz = () => {
             setActiveTab('home');
@@ -2615,27 +2762,59 @@ D.经济建设
               </div>
               
               <div className="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-blue-500">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="bg-blue-100 text-blue-600 p-3 rounded-xl"><BookOpen size={28} /></div>
-                  <div>
-                    <h2 className="text-xl font-bold text-gray-800">模拟考试模式</h2>
-                    <p className="text-gray-500 text-sm">做完全部题目后一并提交查看结果，支持上一题/下一题导航</p>
+                <div className="flex items-center justify-between gap-6">
+                  <div className="flex items-center space-x-4 flex-shrink-0">
+                    <div className="bg-blue-100 text-blue-600 p-3 rounded-xl"><BookOpen size={28} /></div>
+                    <div>
+                      <h2 className="text-xl font-bold text-gray-800">模拟考试模式</h2>
+                      <p className="text-gray-500 text-sm">做完全部后提交，支持题目导航</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 justify-end">
+                    <button onClick={() => startQuiz(null, null, true, 'batch')} className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-medium text-sm">
+                      全部 ({questions.length}题)
+                    </button>
+                    <button onClick={() => startQuiz(null, 'single', true, 'batch')} className="px-4 py-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition text-sm">
+                      单选
+                    </button>
+                    <button onClick={() => startQuiz(null, 'multi', true, 'batch')} className="px-4 py-2 bg-green-50 text-green-600 rounded-xl hover:bg-green-100 transition text-sm">
+                      多选
+                    </button>
+                    <button onClick={() => startQuiz(null, 'judge', true, 'batch')} className="px-4 py-2 bg-purple-50 text-purple-600 rounded-xl hover:bg-purple-100 transition text-sm">
+                      判断
+                    </button>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-3 mt-4">
-                  <button onClick={() => startQuiz(null, null, true, 'batch')} className="px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-medium">
-                    全部题目 ({questions.length}题)
-                  </button>
-                  <button onClick={() => startQuiz(null, 'single', true, 'batch')} className="px-5 py-2.5 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition">
-                    仅单选题
-                  </button>
-                  <button onClick={() => startQuiz(null, 'multi', true, 'batch')} className="px-5 py-2.5 bg-green-50 text-green-600 rounded-xl hover:bg-green-100 transition">
-                    仅多选题
-                  </button>
-                  <button onClick={() => startQuiz(null, 'judge', true, 'batch')} className="px-5 py-2.5 bg-purple-50 text-purple-600 rounded-xl hover:bg-purple-100 transition">
-                    仅判断题
-                  </button>
+              </div>
+
+              {/* 导入错题卡片 */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-amber-500">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-amber-100 text-amber-600 p-3 rounded-xl"><Upload size={28} /></div>
+                    <div>
+                      <h2 className="text-xl font-bold text-gray-800">导入错题练习</h2>
+                      <p className="text-gray-500 text-sm">导入之前导出的错题文件，针对性复习</p>
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleImportFile}
+                      accept=".txt"
+                      className="hidden"
+                    />
+                    <button 
+                      onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                      className="px-5 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition font-medium flex items-center space-x-2"
+                    >
+                      <Upload size={18} />
+                      <span>选择文件</span>
+                    </button>
+                  </div>
                 </div>
+                <p className="text-xs text-gray-400 mt-3">支持导入本系统导出的 .txt 格式错题文件</p>
               </div>
 
               <div className="bg-white p-6 rounded-2xl shadow-lg">
@@ -2748,23 +2927,78 @@ D.经济建设
                       </div>
                     )}
                     
-                    <div className="flex justify-center space-x-4">
+                    <div className="flex flex-wrap justify-center gap-3">
                       <button onClick={() => setActiveTab('home')} className="flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-xl hover:bg-gray-900 transition">
                         <Home size={20} /><span>返回首页</span>
                       </button>
                       {quizMode === 'batch' && wrongQuestions.length > 0 && (
-                        <button onClick={() => {
-                          // 重新做错题
-                          const wrongQs = wrongQuestions.map(w => w.question);
-                          setActiveQuestions(wrongQs);
-                          setCurrentQIndex(0);
-                          setSelectedOptions([]);
-                          setQuizFinished(false);
-                          setScore(0);
-                          setAllAnswers({});
-                        }} className="flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition">
-                          <XCircle size={20} /><span>重做错题 ({wrongQuestions.length}题)</span>
-                        </button>
+                        <>
+                          <button onClick={() => {
+                            // 重新做错题
+                            const wrongQs = wrongQuestions.map(w => w.question);
+                            setActiveQuestions(wrongQs);
+                            setCurrentQIndex(0);
+                            setSelectedOptions([]);
+                            setQuizFinished(false);
+                            setScore(0);
+                            setAllAnswers({});
+                          }} className="flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition">
+                            <XCircle size={20} /><span>重做错题 ({wrongQuestions.length}题)</span>
+                          </button>
+                          <button onClick={() => {
+                            // 导出错题到本地
+                            const now = new Date();
+                            const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+                            const timeStr = `${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}`;
+                            
+                            let content = `毛概题库 - 错题本\n`;
+                            content += `导出时间：${now.toLocaleString()}\n`;
+                            content += `本次成绩：${score}/${activeQuestions.length} (正确率 ${percentage}%)\n`;
+                            content += `错题数量：${wrongQuestions.length} 题\n`;
+                            content += `${'='.repeat(60)}\n\n`;
+                            
+                            wrongQuestions.forEach((item, idx) => {
+                              const q = item.question;
+                              const userAns = item.userAnswer;
+                              const correctAns = Array.isArray(q.answer) ? q.answer : q.answer.split('');
+                              
+                              content += `【错题 ${idx + 1}】\n`;
+                              content += `章节：${q.chapter}\n`;
+                              content += `题型：${q.type === 'single' ? '单选题' : q.type === 'multi' ? '多选题' : '判断题'}\n`;
+                              content += `题目：${q.question}\n\n`;
+                              content += `选项：\n`;
+                              q.options.forEach(opt => {
+                                const label = opt.split('.')[0].trim();
+                                const isCorrect = correctAns.includes(label);
+                                const isUserChoice = userAns.includes(label);
+                                let mark = '  ';
+                                if (isCorrect && isUserChoice) mark = '✓ ';
+                                else if (isCorrect) mark = '✓ ';
+                                else if (isUserChoice) mark = '✗ ';
+                                content += `${mark}${opt}\n`;
+                              });
+                              content += `\n你的答案：${userAns.length === 0 ? '未作答' : userAns.join(', ')}\n`;
+                              content += `正确答案：${correctAns.join(', ')}\n`;
+                              content += `${'-'.repeat(60)}\n\n`;
+                            });
+                            
+                            content += `\n${'='.repeat(60)}\n`;
+                            content += `复习建议：重点关注错题涉及的知识点，多做几遍加深印象！\n`;
+                            
+                            // 创建并下载文件
+                            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `毛概错题本_${dateStr}_${timeStr}.txt`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                          }} className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
+                            <Download size={20} /><span>导出错题</span>
+                          </button>
+                        </>
                       )}
                     </div>
                   </div>
@@ -2857,7 +3091,7 @@ D.经济建设
             if (!currentQ) return <div className="text-center py-12">加载中...</div>;
 
             return (
-              <div className="max-w-3xl mx-auto animate-fade-in">
+              <div className={`${quizMode === 'batch' ? 'max-w-6xl' : 'max-w-3xl'} mx-auto animate-fade-in`}>
                 <div className="flex items-center justify-between mb-6">
                   <button onClick={exitQuiz} className="flex items-center text-gray-500 hover:text-gray-800 transition"><ArrowRight className="transform rotate-180 mr-2" size={20} />退出</button>
                   <div className="text-center">
@@ -2871,7 +3105,9 @@ D.经济建设
                   <div className="bg-red-500 h-2 rounded-full transition-all" style={{ width: `${((currentQIndex + 1) / activeQuestions.length) * 100}%` }}></div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <div className={`${quizMode === 'batch' ? 'flex gap-6' : ''}`}>
+                {/* 左侧：题目内容 */}
+                <div className={`bg-white rounded-2xl shadow-lg p-6 md:p-8 ${quizMode === 'batch' ? 'flex-1' : ''}`}>
                   <div className="mb-6">
                     <div className="flex items-center space-x-2 mb-4">
                       <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">第 {currentQIndex + 1} / {activeQuestions.length} 题</span>
@@ -2908,14 +3144,15 @@ D.经济建设
 
                       return (
                         <button key={idx} onClick={() => handleOptionSelect(option)} disabled={showFeedback} className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center group ${itemClass}`}>
-                          <div className={`w-6 h-6 rounded-full border-2 mr-4 flex items-center justify-center flex-shrink-0 transition-colors ${dotClass}`}>
+                          <div className={`w-8 h-8 rounded-lg border-2 mr-4 flex items-center justify-center flex-shrink-0 transition-colors font-bold text-sm ${dotClass}`}>
                              {showFeedback ? (
-                               currentQ.answer.includes(label) ? <CheckCircle size={14}/> : (isSelected ? <XCircle size={14}/> : null)
+                               currentQ.answer.includes(label) ? <CheckCircle size={14}/> : (isSelected ? <XCircle size={14}/> : label)
                              ) : (
-                               isSelected && <div className="w-2 h-2 bg-white rounded-full" />
+                               label
                              )}
                           </div>
-                          <span className="text-base">{option}</span>
+                          <span className="text-base flex-1">{option.substring(option.indexOf('.') + 1).trim()}</span>
+                          {!showFeedback && <span className="kbd-hint opacity-50 group-hover:opacity-100">{label}</span>}
                         </button>
                       );
                     })}
@@ -2935,73 +3172,9 @@ D.经济建设
                       </div>
                   )}
 
-                  <div className="mt-8 pt-6 border-t border-gray-100">
-                    {quizMode === 'batch' ? (
-                      <div className="space-y-4">
-                        {/* 题目导航指示器 */}
-                        <div className="flex flex-wrap gap-1 justify-center mb-4">
-                          {activeQuestions.map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => {
-                                setCurrentQIndex(idx);
-                                setSelectedOptions(allAnswers[idx] || []);
-                              }}
-                              className={`w-8 h-8 text-xs rounded-lg transition-all ${
-                                idx === currentQIndex 
-                                  ? 'bg-blue-600 text-white font-bold' 
-                                  : allAnswers[idx] && allAnswers[idx].length > 0
-                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                              }`}
-                            >
-                              {idx + 1}
-                            </button>
-                          ))}
-                        </div>
-                        <div className="text-center text-sm text-gray-500 mb-2">
-                          已作答: {Object.keys(allAnswers).filter(k => allAnswers[k] && allAnswers[k].length > 0).length} / {activeQuestions.length}
-                        </div>
-                        {/* 导航按钮 */}
-                        <div className="flex justify-between items-center">
-                          <button 
-                            onClick={handlePrevQuestion} 
-                            disabled={currentQIndex === 0}
-                            className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
-                              currentQIndex === 0 
-                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                            }`}
-                          >
-                            <ArrowRight className="transform rotate-180" size={20} />
-                            <span>上一题</span>
-                            <span className="kbd-hint">←</span>
-                          </button>
-                          
-                          <button 
-                            onClick={handleSubmitAll}
-                            className="flex items-center space-x-2 px-6 py-3 rounded-xl font-bold transition-all bg-red-600 text-white hover:bg-red-700 shadow-md"
-                          >
-                            <CheckCircle size={20} />
-                            <span>提交全部</span>
-                          </button>
-                          
-                          <button 
-                            onClick={handleNextQuestion} 
-                            disabled={currentQIndex === activeQuestions.length - 1}
-                            className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
-                              currentQIndex === activeQuestions.length - 1 
-                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                            }`}
-                          >
-                            <span>下一题</span>
-                            <span className="kbd-hint">→</span>
-                            <ArrowRight size={20} />
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
+                  {/* 即时模式的底部按钮 */}
+                  {quizMode === 'instant' && (
+                    <div className="mt-8 pt-6 border-t border-gray-100">
                       <div className="flex justify-end">
                         {!showFeedback ? (
                             <button onClick={handleSubmitAnswer} disabled={selectedOptions.length === 0} className={`flex items-center space-x-2 px-8 py-3 rounded-xl font-bold transition-all ${selectedOptions.length === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-red-600 text-white hover:bg-red-700 shadow-md transform hover:-translate-y-0.5'}`}>
@@ -3013,7 +3186,108 @@ D.经济建设
                             </button>
                         )}
                       </div>
-                    )}
+                    </div>
+                  )}
+                </div>
+                
+                {/* 右侧：题目导航面板（仅模拟考试模式） */}
+                {quizMode === 'batch' && (
+                  <div className="w-72 flex-shrink-0">
+                    <div className="bg-white rounded-2xl shadow-lg p-5 sticky top-24">
+                      <h3 className="font-bold text-gray-800 mb-4 text-center">答题卡</h3>
+                      
+                      {/* 题目导航指示器 */}
+                      <div className="flex flex-wrap gap-1.5 justify-center mb-4">
+                        {activeQuestions.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              setCurrentQIndex(idx);
+                              setSelectedOptions(allAnswers[idx] || []);
+                            }}
+                            className={`w-9 h-9 text-sm rounded-lg transition-all font-medium ${
+                              idx === currentQIndex 
+                                ? 'bg-blue-600 text-white font-bold shadow-md ring-2 ring-blue-300' 
+                                : allAnswers[idx] && allAnswers[idx].length > 0
+                                  ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                            }`}
+                          >
+                            {idx + 1}
+                          </button>
+                        ))}
+                      </div>
+                      
+                      {/* 图例说明 */}
+                      <div className="flex justify-center gap-4 text-xs text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-blue-600"></span> 当前</span>
+                        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-green-100"></span> 已答</span>
+                        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-gray-100"></span> 未答</span>
+                      </div>
+                      
+                      {/* 统计信息 */}
+                      <div className="text-center mb-4">
+                        <div className="text-2xl font-bold text-gray-800">
+                          {Object.keys(allAnswers).filter(k => allAnswers[k] && allAnswers[k].length > 0).length}
+                          <span className="text-gray-400 font-normal"> / </span>
+                          {activeQuestions.length}
+                        </div>
+                        <div className="text-sm text-gray-500">已作答题目</div>
+                      </div>
+                      
+                      {/* 导航按钮 */}
+                      <div className="space-y-2">
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={handlePrevQuestion} 
+                            disabled={currentQIndex === 0}
+                            className={`flex-1 flex items-center justify-center space-x-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                              currentQIndex === 0 
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                          >
+                            <ArrowRight className="transform rotate-180" size={16} />
+                            <span>上一题</span>
+                            <span className="kbd-hint text-xs">←</span>
+                          </button>
+                          
+                          <button 
+                            onClick={handleNextQuestion} 
+                            disabled={currentQIndex === activeQuestions.length - 1}
+                            className={`flex-1 flex items-center justify-center space-x-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                              currentQIndex === activeQuestions.length - 1 
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                          >
+                            <span>下一题</span>
+                            <span className="kbd-hint text-xs">→</span>
+                            <ArrowRight size={16} />
+                          </button>
+                        </div>
+                        
+                        <button 
+                          onClick={handleSubmitAll}
+                          className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl font-bold transition-all bg-red-600 text-white hover:bg-red-700 shadow-md"
+                        >
+                          <CheckCircle size={18} />
+                          <span>提交全部</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                </div>
+                
+                {/* 键盘快捷键提示 */}
+                <div className="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-200">
+                  <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+                    <span className="font-medium text-gray-600">⌨️ 快捷键：</span>
+                    <span><span className="kbd-hint">A</span><span className="kbd-hint">B</span><span className="kbd-hint">C</span><span className="kbd-hint">D</span> 选择选项</span>
+                    <span><span className="kbd-hint">←</span><span className="kbd-hint">→</span> 切换题目</span>
+                    {quizMode === 'instant' && <span><span className="kbd-hint">Space</span> 提交/下一题</span>}
+                    {quizMode === 'instant' && <span><span className="kbd-hint">Enter</span> 提交答案</span>}
                   </div>
                 </div>
               </div>
